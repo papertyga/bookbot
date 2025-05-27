@@ -1,17 +1,24 @@
+import sys
+from stats import wordcount
+from stats import charcount
+from stats import sort_chars
 
+def get_book_text(filepath): 
+    with open(filepath) as f:
+        frankenstein = f.read()
+    return frankenstein
 def main():
-    with open("books/frankenstein.txt") as f:
-        file_contents = f.read().lower()
-    i = 0
-    stringint = {}
-    while i < len(file_contents): 
-        singlechar = file_contents[i]
-        if singlechar not in stringint:
-            stringint [singlechar] = 1
-        else:
-            stringint [singlechar] += 1
-        i += 1
-    print(stringint)
+    if len(sys.argv) != 2:
+        print ("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    text = get_book_text(sys.argv[1])
+    num_words = wordcount(text)
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {sys.argv[1]}...")
+    print("----------- Word Count ----------")
+    print(f"Found {num_words} total words")
+    print("----------- Character Count ----------")
+    print (sort_chars(charcount(text)))
+    print("----------- END ----------")
+    
 main()
-
-
